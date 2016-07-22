@@ -1,18 +1,23 @@
 package com.baeldung.lss.spring;
 
+import com.baeldung.lss.persistence.InMemoryUserRepository;
+import com.baeldung.lss.persistence.UserRepository;
+import com.baeldung.lss.web.model.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.convert.converter.Converter;
 
-import com.baeldung.lss.persistence.InMemoryUserRepository;
-import com.baeldung.lss.persistence.UserRepository;
-import com.baeldung.lss.web.model.User;
-
 @SpringBootApplication
 @ComponentScan("com.baeldung.lss.web")
 public class LssApp2 {
+
+    public static void main(String[] args) throws Exception {
+        SpringApplication.run(new Class[]{
+                LssApp2.class, LssSecurityConfig.class
+        }, args);
+    }
 
     @Bean
     public UserRepository userRepository() {
@@ -27,10 +32,6 @@ public class LssApp2 {
                 return userRepository().findUser(Long.valueOf(id));
             }
         };
-    }
-
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(LssApp2.class, args);
     }
 
 }
