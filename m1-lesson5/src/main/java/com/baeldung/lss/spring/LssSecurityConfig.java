@@ -5,6 +5,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 public class LssSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -33,9 +34,11 @@ public class LssSecurityConfig extends WebSecurityConfigurerAdapter {
         .formLogin().
             loginPage("/login").permitAll().
             loginProcessingUrl("/doLogin")
-            
         .and()
-        .csrf().disable()
+            .logout().permitAll().logoutRequestMatcher(new AntPathRequestMatcher("/doLogout","GET"))
+
+        .and()
+            .csrf().disable()
         ;
     } // @formatter:on
 
