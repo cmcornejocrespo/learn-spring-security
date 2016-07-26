@@ -5,22 +5,17 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 @EnableWebSecurity
 public class LssSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public LssSecurityConfig() {
-        super();
-    }
-
-    //
+    @Autowired
+    private UserDetailsService lssUserDetailsService;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception { // @formatter:off 
-        auth.
-            inMemoryAuthentication().
-            withUser("user").password("pass").
-            roles("USER");
+        auth.userDetailsService(lssUserDetailsService);
     } // @formatter:on
 
     @Override
@@ -29,18 +24,14 @@ public class LssSecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
                 .antMatchers("/signup", "/user/register").permitAll()
                 .anyRequest().authenticated()
-
         .and()
-        .formLogin().
-            loginPage("/login").permitAll().
-            loginProcessingUrl("/doLogin")
-
+            .formLogin().
+                loginPage("/login").permitAll().
+                loginProcessingUrl("/doLogin")
         .and()
-        .logout().permitAll().logoutUrl("/logout")
-
+            .logout().permitAll().logoutUrl("/logout")
         .and()
-        .csrf().disable()
-        ;
+            .csrf().disable();
     } // @formatter:on
 
 }
