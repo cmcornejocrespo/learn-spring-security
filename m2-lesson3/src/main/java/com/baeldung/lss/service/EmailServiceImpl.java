@@ -21,15 +21,16 @@ public class EmailServiceImpl implements EmailService {
 
         final String recipientAddress = user.getEmail();
         final String subject = "Registration Confirmation";
-        final String confirmationUrl = appUrl + "/registrationConfirm.html?token=" + token;
+        final String confirmationUrl = new StringBuilder().append(appUrl).append("/registrationConfirm?token=").append(token).toString();
 
         final SimpleMailMessage email = new SimpleMailMessage();
+
         email.setFrom("carlos.cornejo.crespo@gmail.com");
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText("Please click the link below to activate your account\n\n" + confirmationUrl);
+        final String emailBody = new StringBuffer().append("Please click the link below to activate your account\n\n").append(confirmationUrl).toString();
+        email.setText(emailBody);
 
         mailSender.send(email);
-
     }
 }
