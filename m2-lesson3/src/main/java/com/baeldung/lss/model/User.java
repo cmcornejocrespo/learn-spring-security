@@ -1,15 +1,11 @@
-package com.baeldung.lss.web.model;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Transient;
-import java.util.Calendar;
+package com.baeldung.lss.model;
 
 import com.baeldung.lss.validation.PasswordMatches;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
+import java.util.Calendar;
 
 @Entity
 @PasswordMatches
@@ -30,7 +26,15 @@ public class User {
     @NotEmpty(message = "Password confirmation is required.")
     private String passwordConfirmation;
 
+    @Column
+    private Boolean enabled;
+
     private Calendar created = Calendar.getInstance();
+
+    public User() {
+        super();
+        this.enabled = false;
+    }
 
     public Long getId() {
         return this.id;
@@ -72,8 +76,16 @@ public class User {
         this.passwordConfirmation = passwordConfirmation;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(final Boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", email='" + email + '\'' + ", password='" + password + '\'' + ", passwordConfirmation='" + passwordConfirmation + '\'' + ", created=" + created + '}';
+        return "User{" + "id=" + id + '\'' + ", email='" + email + '\'' + ", password='" + password + '\'' + ", passwordConfirmation='" + passwordConfirmation + '\'' + ", created=" + created + ", enabled=" + enabled + '}';
     }
 }

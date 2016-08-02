@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.baeldung.lss.persistence.UserRepository;
 import com.baeldung.lss.service.IUserService;
 import com.baeldung.lss.validation.EmailExistsException;
-import com.baeldung.lss.web.model.User;
+import com.baeldung.lss.model.User;
 
 @Controller
 @RequestMapping("/user")

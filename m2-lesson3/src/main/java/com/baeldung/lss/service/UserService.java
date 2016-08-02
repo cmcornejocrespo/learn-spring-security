@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.baeldung.lss.persistence.UserRepository;
 import com.baeldung.lss.validation.EmailExistsException;
-import com.baeldung.lss.web.model.User;
+import com.baeldung.lss.model.User;
 
 @Service
 @Transactional
